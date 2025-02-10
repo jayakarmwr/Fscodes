@@ -1,53 +1,53 @@
 /*
- You are developing an application for a garden management system where each tree 
-in the garden is represented as a binary tree structure. The system needs to 
-allow users to plant new trees in a systematic way, ensuring that each tree is 
-filled level by level.
-
-A gardener wants to:
- - Plant trees based on user input.
- - Ensure trees grow in a balanced way by filling nodes level by level.
- - Inspect the garden layout by performing an in-order traversal, which helps 
-   analyze the natural arrangement of trees.
-
-Your task is to implement a program that:
-    - Accepts a list of N tree species (as integers).
-    - Builds a binary tree using level-order insertion.
-    - Displays the in-order traversal of the tree.
+ Write a program to construct a binary tree from level-order input, while treating -1 
+as a placeholder for missing nodes. The program reads input, constructs the tree, 
+and provides an in-order traversal to verify correctness.
 
 Input Format:
--------------
-- An integer N representing the number of tree plants.
-- A space-separated list of N integers representing tree species.
+---------------
+Space separated integers, level order data (where -1 indiactes null node).
 
 Output Format:
---------------
-A list of integers, in-order traversal of tree.
+-----------------
+Print the in-order data of the tree.
 
 
 Sample Input:
--------------
-7
+----------------
+1 2 3 -1 -1 4 5
+
+Sample Output:
+----------------
+2 1 4 3 5
+
+Explanation:
+--------------
+    1
+   / \
+  2   3
+     / \
+    4   5
+
+
+Sample Input:
+----------------
 1 2 3 4 5 6 7
 
 Sample Output:
---------------
+----------------
 4 2 5 1 6 3 7
 
-
 Explanation:
-------------
-The tree looks like this:
-
+--------------
         1
        / \
       2   3
      / \  / \
-    4   5 6  7
-The in order is : 4 2 5 1 6 3 7
+    4  5 6  7
 
  */
 package Day2_slidingwindow;
+
 import java.util.*;
 class Tree
 {
@@ -59,16 +59,16 @@ class Tree
         this.data=data;
         this.left=null;
         this.right=null;
-        
     }
     public static void main(String[] args)
     {
         Scanner sc=new Scanner(System.in);
-        int n=sc.nextInt();
-        int[] arr=new int[n];
-        for(int i=0;i<n;i++)
+        String s=sc.nextLine();
+        String str[]=s.split(" ");
+        int[] arr=new int[str.length];
+        for(int i=0;i<str.length;i++)
         {
-            arr[i]=sc.nextInt();
+          arr[i]=Integer.parseInt(str[i]);
         }
         Tree root=build(arr);
         inorder(root);
@@ -83,19 +83,29 @@ class Tree
         while(!q.isEmpty())
         {
             Tree node=q.poll();
-            if(i<arr.length)
+            
+                
+            if(i<arr.length && arr[i]!=-1)
             {
                 node.left=new Tree(arr[i]);
                 q.offer(node.left);
                 i++;
             }
-            if(i<arr.length)
+            else{
+                i++;
+            }       
+            
+            if(i<arr.length && arr[i]!=-1)
             {
                 node.right=new Tree(arr[i]);
                 q.offer(node.right);
                 i++;
             }
-            
+            else{
+                i++;
+            }
+             
+    
         }
         return root;
     }
@@ -110,4 +120,5 @@ class Tree
         System.out.print(root.data+" ");
         inorder(root.right);
     }
+
 }
