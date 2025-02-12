@@ -39,13 +39,6 @@ package Day4_slidingwindow;
 import java.util.Scanner;
 
 public class subnet3 {
-    public static void main(String[] args) {
-        Scanner sc=new Scanner(System.in);
-        String ip1=sc.nextLine();
-        String ip2=sc.nextLine();
-        int n=sc.nextInt();
-        
-
-    }
+    
     
 }
