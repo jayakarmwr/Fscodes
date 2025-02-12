@@ -57,5 +57,50 @@ package Day4_slidingwindow;
 import java.util.*;
 class Program2
 {
-    
+    public static PriorityQueue<Integer> q=new PriorityQueue<>();
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+         int k=sc.nextInt();
+        int m=sc.nextInt();
+        int[] arr=new int[n];
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=sc.nextInt();
+        }
+       
+        
+        
+        for(int i=m;i<=n;i++)
+        {
+            slide(arr,i);
+        }
+        int res=0;
+        while(!q.isEmpty() && k>0)
+        {
+            res=q.poll();
+            k--;
+        }
+        System.out.println(res);
+    }
+    public static void slide(int[] arr,int n)
+    {
+        int sum=0;
+        for(int i=0;i<n;i++)
+        {
+            sum+=arr[i];
+        }
+        q.add(sum);
+        for(int i=n;i<arr.length;i++)
+        {
+            sum-=arr[i-n];
+            sum+=arr[i];
+            
+            
+            q.add(sum);
+            
+        }
+        return;
+    }
 }

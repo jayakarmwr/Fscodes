@@ -34,7 +34,36 @@ Sample Output-2:
 */
 
 package Day4_slidingwindow;
-
+import java.util.*;
 public class subnet2 {
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        String s=sc.nextLine();
+        int n=sc.nextInt();
+        int subnetmask=(-1<<(32-n));
+        int ip=iptoint(s);
+        int network=ip & subnetmask;
+        int host=network | ~subnetmask;
+        System.out.println(inttoip(network)+" "+inttoip(host));
+
+    }
+    public static int iptoint(String s)
+    {
+        String[] parts=s.split("\\.");
+        int ip=0;
+        for(String part:parts)
+        {
+            ip=(ip<<8)|Integer.parseInt(part);
+        }
+        return ip;
+    }
+    public static String inttoip(int ip)
+    {
+        return ((ip >> 24) & 0xFF) + "." +
+               ((ip >> 16) & 0xFF) + "." +
+               ((ip >> 8) & 0xFF) + "." +
+               (ip & 0xFF);
     
+    }
 }
