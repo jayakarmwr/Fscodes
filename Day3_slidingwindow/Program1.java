@@ -90,7 +90,7 @@ public class Program1 {
     }
 
     HashSet<Integer> Watchlist = new HashSet<>();
-    HashMap<Integer, Integer> dupes = new HashMap<>();
+    Map<Integer, Integer> dupes = new Hashtable<>();
     int noOfRestricted = 0;
     int max_rating = -1;
     int rating = 0;
