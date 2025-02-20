@@ -58,6 +58,106 @@ Shelf 5: [7]
  */
 package Day9_trees;
 
-public class Tree2 {
+import java.util.*;
+class Tree2
+{
+    int data;
+    Tree2 left;
+    Tree2 right;
+    Tree2(int data)
+    {
+        this.data=data;
+        this.left=null;
+        this.right=null;
+    }
+    static class Pair
+    {
+        Tree2 node;
+        int row;
+        int col;
+        Pair(Tree2 node,int row,int col)
+        {
+            this.node=node;
+            this.row=row;
+            this.col=col;
+        }
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        String s=sc.nextLine();
+        String[] st=s.split(" ");
+        int[] arr=new int[st.length];
+        for(int i=0;i<st.length;i++)
+        {
+            arr[i]=Integer.parseInt(st[i]);
+        }
+        Tree2 root=buildtree(arr);
+        List<List<Integer>> l=verticaltraversal(root);
+        System.out.println(l);
+        
+    }
+    public static List<List<Integer>> verticaltraversal(Tree2 root)
+    {
+        TreeMap<Integer,TreeMap<Integer,List<Integer>>> map=new TreeMap<>();
+        Queue<Pair> q=new LinkedList<>();
+        q.add(new Pair(root,0,0));
+        while(!q.isEmpty()){
+            Pair t=q.poll();
+            Tree2 node=t.node;
+            int x=t.row;
+            int y=t.col;
+            if(!map.containsKey(x)){
+                map.put(x,new TreeMap<>());
+            }
+            if(!map.get(x).containsKey(y)){
+                map.get(x).put(y,new ArrayList<>());
+            }
+            map.get(x).get(y).add(node.data);
+            if(node.left!=null){
+                q.add(new Pair(node.left,x-1,y+1));
+            }
+            if(node.right!=null){
+                q.add(new Pair(node.right,x+1,y+1));
+            }
+
+        }
+        List<List<Integer>> res=new ArrayList<>();
+        for(TreeMap<Integer,List<Integer>> k:map.values()){
+            List<Integer> vertical = new ArrayList<>();
+            for (List<Integer> pq : k.values()) {
+                    //Collections.sort(pq);
+                    vertical.addAll(pq);
+                
+            }
+            res.add(vertical);
+        }
+        return res;
+    }
     
+    
+    public static Tree2 buildtree(int[] arr)
+    {
+        Queue<Tree2> q=new LinkedList<>();
+        Tree2 root=new Tree2(arr[0]);
+        q.offer(root);
+        int i=1;
+        while(!q.isEmpty())
+        {
+            Tree2 node=q.poll();
+            if(i<arr.length && arr[i]!=-1)
+            {
+                node.left=new Tree2(arr[i]);
+                q.offer(node.left);
+            }
+            i++;
+            if(i<arr.length && arr[i]!=-1)
+            {
+                node.right=new Tree2(arr[i]);
+                q.offer(node.right);
+            }
+            i++;
+        }
+        return root;
+    }
 }

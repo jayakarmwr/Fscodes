@@ -95,7 +95,7 @@ wss.on('connection', (ws) => {
     console.log("New client connected.");
 
     ws.on('message', async(message) => {
-        const action=message[0];
+        const action=String.trim(message[0]);
         const data={name:message[1],
             salary:message[2],
             role:message[3],
@@ -107,14 +107,14 @@ wss.on('connection', (ws) => {
             case "INSERT":
                 const newuser=await User(data);
                 await newuser.save();
-                ws.send(`Employee inserted successfully. ID: ${newuser.id}`);
+                ws.send(`Employee inserted successfully. ID: ${newuser.ID}`);
             case "RETRIEVE":
                 const finduser=await User.find();
-                ws.send(`ID: ${finduser.id}, Name: ${finduser.name}, Salary: ${finduser.salary}, Role: ${finduser.role}, Department: ${finduser.department}, Experience: ${finduser.experience}`);
+                ws.send(`ID: ${finduser.ID}, Name: ${finduser.name}, Salary: ${finduser.salary}, Role: ${finduser.role}, Department: ${finduser.department}, Experience: ${finduser.experience}`);
             case "RETRIEVE_BY_DEPT IT":
-                const findbyid=await User.findById({department:"IT"});
+                const findbyid=await User.find({department:"IT"});
                 findbyid.forEach(element => {
-                    ws.send(`ID: ${element.id}, Name: ${element.name}, Salary: ${element.salary}, Role: ${element.role}, Department: ${element.department}, Experience: ${element.experience}`);
+                    ws.send(`ID: ${element.ID}, Name: ${element.name}, Salary: ${element.salary}, Role: ${element.role}, Department: ${element.department}, Experience: ${element.experience}`);
                     
                 });
             default:
