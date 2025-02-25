@@ -83,7 +83,7 @@ package Day10_trees;
 import java.util.*;
 class Solution
 {
-    public static int maxCount=1;
+    public static int maxcount=0;
     public static void main(String[] args)
     {
         Scanner sc=new Scanner(System.in);
@@ -113,7 +113,7 @@ class Solution
         boolean vist[]=new boolean[food.size()];
         int count=0;
         backtrack(food,nest,home,count,total,0,home,vist);
-        System.out.println(maxCount);
+        System.out.println(maxcount);
         
     }
     public static void backtrack(List<int[]> food,List<int[]> nest,int[] home,int count,double total,double dist, int[] curr,boolean[] vist)
@@ -122,13 +122,13 @@ class Solution
         {
             return;
         }
-        maxCount = Math.max(maxCount, count);
+        maxcount=Math.max(count,maxcount);
         for(int i=0;i<food.size();i++)
         {
             if(!vist[i])
             {
                 vist[i]=true;
-                double fdist=caldist(food.get(i),home);
+                double fdist=caldist(food.get(i),curr);
                 for(int j=0;j<nest.size();j++)
                 {
                     double ndist=caldist(nest.get(j),food.get(i));

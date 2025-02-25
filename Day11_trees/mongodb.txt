@@ -1,0 +1,446 @@
+/*
+Write a MongoDB query to find students aged between 18 and 21
+and display student_id, name and age only.
+
+Collection: 'stucollection'
+
+Reference Document:
+----------------------
+{
+    "student_id": "S1001",
+    "name": "Alice Johnson",
+    "age": 18,
+    "contact": {
+      "email": "alice@example.com",
+      "phone": "123-456-7890",
+      "address": {
+        "street": "123 Maple St",
+        "city": "New York",
+        "state": "NY",
+        "zip": "10001"
+      }
+    },
+    "enrolled_courses": ["Java", "Python"],
+    "exams": [
+      {
+        "subject": "Java",
+        "scores": [
+          { "type": "quiz", "score": 80 },
+          { "type": "midterm", "score": 75 },
+          { "type": "final", "score": 90 }
+        ],
+        "passed": true
+      },
+      {
+        "subject": "Python",
+        "scores": [
+          { "type": "quiz", "score": 70 },
+          { "type": "midterm", "score": 65 },
+          { "type": "final", "score": 85 }
+        ],
+        "passed": true
+      }
+    ],
+    "skills": ["Java", "Spring Boot"],
+    "guardian": {
+      "name": "Robert Johnson",
+      "relation": "Father",
+      "contact": "robert.j@example.com"
+    }
+}
+
+Sample Output:
+--------------
+[                                                                               
+  {                                                                             
+    student_id: 'S1001',                                                        
+    name: 'Alice Johnson',                                                      
+    age: 18                                                                     
+  },                                                                            
+  {                                                                             
+    student_id: 'S1002',                                                        
+    name: 'Bob Smith',                                                          
+    age: 19                                                                     
+  }
+]
+
+
+Query Reference:
+-------------------
+printjson() : JS library function to display the JSON Object data.
+In db.<collection>.find():
+	db -> Refers to the database.
+	<collection> -> Your collection name
+	find() -> Method to write the selection and projection part of the query.
+
+*/
+	
+printjson(
+	db.stucollection.find({"age":{$gte:18, $lte:21}},{"student_id":1,"name":1,"age":1,"_id":0})
+);
+
+
+
+
+
+
+
+
+
+
+/*
+Write a MongoDB query to find students whose guardian is a "Father"
+and display student_id, name only.
+
+Collection: 'stucollection'
+
+Reference Document:
+----------------------
+{
+    "student_id": "S1001",
+    "name": "Alice Johnson",
+    "age": 18,
+    "contact": {
+      "email": "alice@example.com",
+      "phone": "123-456-7890",
+      "address": {
+        "street": "123 Maple St",
+        "city": "New York",
+        "state": "NY",
+        "zip": "10001"
+      }
+    },
+    "enrolled_courses": ["Java", "Python"],
+    "exams": [
+      {
+        "subject": "Java",
+        "scores": [
+          { "type": "quiz", "score": 80 },
+          { "type": "midterm", "score": 75 },
+          { "type": "final", "score": 90 }
+        ],
+        "passed": true
+      },
+      {
+        "subject": "Python",
+        "scores": [
+          { "type": "quiz", "score": 70 },
+          { "type": "midterm", "score": 65 },
+          { "type": "final", "score": 85 }
+        ],
+        "passed": true
+      }
+    ],
+    "skills": ["Java", "Spring Boot"],
+    "guardian": {
+      "name": "Robert Johnson",
+      "relation": "Father",
+      "contact": "robert.j@example.com"
+    }
+}
+
+Sample Output:
+--------------
+[                                                                               
+  {                                                                             
+    student_id: 'S1001',                                                        
+    name: 'Alice Johnson'                                                       
+  },                                                                            
+  {                                                                             
+    student_id: 'S1003',                                                        
+    name: 'Charlie Williams'                                                    
+  }
+]
+
+
+Query Reference:
+-------------------
+printjson() : JS library function to display the JSON Object data.
+In db.<collection>.find():
+	db -> Refers to the database.
+	<collection> -> Your collection name
+	find() -> Method to write the selection and projection part of the query.
+
+*/
+	
+printjson(
+	db.stucollection.find({"guardian.relation":"Father"},{"student_id":1,"name":1,"_id":0})
+)
+
+
+
+
+
+
+
+
+
+
+/*
+Write a MongoDB query to count how many students are enrolled in each course.
+Print the data in sorted order of course name.
+
+Collection: 'stucollection'
+
+Reference Document:
+----------------------
+{
+    "student_id": "S1001",
+    "name": "Alice Johnson",
+    "age": 18,
+    "contact": {
+      "email": "alice@example.com",
+      "phone": "123-456-7890",
+      "address": {
+        "street": "123 Maple St",
+        "city": "New York",
+        "state": "NY",
+        "zip": "10001"
+      }
+    },
+    "enrolled_courses": ["Java", "Python"],
+    "exams": [
+      {
+        "subject": "Java",
+        "scores": [
+          { "type": "quiz", "score": 80 },
+          { "type": "midterm", "score": 75 },
+          { "type": "final", "score": 90 }
+        ],
+        "passed": true
+      },
+      {
+        "subject": "Python",
+        "scores": [
+          { "type": "quiz", "score": 70 },
+          { "type": "midterm", "score": 65 },
+          { "type": "final", "score": 85 }
+        ],
+        "passed": true
+      }
+    ],
+    "skills": ["Java", "Spring Boot"],
+    "guardian": {
+      "name": "Robert Johnson",
+      "relation": "Father",
+      "contact": "robert.j@example.com"
+    }
+}
+
+Sample Output:
+--------------
+[                                                                               
+  {                                                                             
+    _id: 'C++',                                                                 
+    total_students: 4                                                           
+  },                                                                            
+  {                                                                             
+    _id: 'ML',                                                                  
+    total_students: 6                                                           
+  }
+]
+
+Query Reference:
+-------------------
+printjson() : JS library function to display the JSON Object data.
+In db.<collection>.find():
+	db -> Refers to the database.
+	<collection> -> Your collection name
+	find() -> Method to write the selection and projection part of the query.
+
+*/
+	
+printjson(
+	db.stucollection.aggregate([{$unwind:"$enrolled_courses"},
+	{$group:{"_id":"$enrolled_courses",total_students: {$sum:1}}},
+	{$sort:{"_id":1}}])
+)
+
+
+
+
+
+
+
+
+
+
+/*
+Write a MongoDB query to find the Total Number of Students in Each City
+Print the output in the sorted order of the city name.
+
+Collection: 'stucollection'
+
+Reference Document:
+----------------------
+{
+    "student_id": "S1001",
+    "name": "Alice Johnson",
+    "age": 18,
+    "contact": {
+      "email": "alice@example.com",
+      "phone": "123-456-7890",
+      "address": {
+        "street": "123 Maple St",
+        "city": "New York",
+        "state": "NY",
+        "zip": "10001"
+      }
+    },
+    "enrolled_courses": ["Java", "Python"],
+    "exams": [
+      {
+        "subject": "Java",
+        "scores": [
+          { "type": "quiz", "score": 80 },
+          { "type": "midterm", "score": 75 },
+          { "type": "final", "score": 90 }
+        ],
+        "passed": true
+      },
+      {
+        "subject": "Python",
+        "scores": [
+          { "type": "quiz", "score": 70 },
+          { "type": "midterm", "score": 65 },
+          { "type": "final", "score": 85 }
+        ],
+        "passed": true
+      }
+    ],
+    "skills": ["Java", "Spring Boot"],
+    "guardian": {
+      "name": "Robert Johnson",
+      "relation": "Father",
+      "contact": "robert.j@example.com"
+    }
+}
+
+Sample Output:
+--------------
+[                                                                               
+  {                                                                             
+    total_students: 1,                                                          
+    city: 'Atlanta'                                                             
+  },                                                                            
+  {                                                                             
+    total_students: 1,                                                          
+    city: 'Austin'                                                              
+  }
+]
+
+
+Query Reference:
+-------------------
+printjson() : JS library function to display the JSON Object data.
+In db.<collection>.find():
+	db -> Refers to the database.
+	<collection> -> Your collection name
+	find() -> Method to write the selection and projection part of the query.
+
+*/
+	
+printjson(
+	db.stucollection.aggregate([{$group:{"_id":"$contact.address.city",total_students:{$sum:1}}},{$sort:{"_id":1}},{$project:{"city":"$_id","_id":0,total_students:1}}])
+)
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+Write a MongoDB query to find the average exam score for each student
+Print the output in the sorted order of the student names.
+
+Collection: 'stucollection'
+
+Reference Document:
+----------------------
+{
+    "student_id": "S1001",
+    "name": "Alice Johnson",
+    "age": 18,
+    "contact": {
+      "email": "alice@example.com",
+      "phone": "123-456-7890",
+      "address": {
+        "street": "123 Maple St",
+        "city": "New York",
+        "state": "NY",
+        "zip": "10001"
+      }
+    },
+    "enrolled_courses": ["Java", "Python"],
+    "exams": [
+      {
+        "subject": "Java",
+        "scores": [
+          { "type": "quiz", "score": 80 },
+          { "type": "midterm", "score": 75 },
+          { "type": "final", "score": 90 }
+        ],
+        "passed": true
+      },
+      {
+        "subject": "Python",
+        "scores": [
+          { "type": "quiz", "score": 70 },
+          { "type": "midterm", "score": 65 },
+          { "type": "final", "score": 85 }
+        ],
+        "passed": true
+      }
+    ],
+    "skills": ["Java", "Spring Boot"],
+    "guardian": {
+      "name": "Robert Johnson",
+      "relation": "Father",
+      "contact": "robert.j@example.com"
+    }
+}
+
+Sample Output:
+---------------
+[                                                                               
+  {                                                                             
+    _id: 'Alice Johnson',                                                       
+    avg_score: 77.5                                                             
+  },                                                                            
+  {                                                                             
+    _id: 'Ava Wilson',                                                          
+    avg_score: 81.83333333333333                                                
+  }
+]
+ 
+Query Reference:
+-------------------
+printjson() : JS library function to display the JSON Object data.
+In db.<collection>.find():
+	db -> Refers to the database.
+	<collection> -> Your collection name
+	find() -> Method to write the selection and projection part of the query.
+
+*/
+	
+printjson(
+	db.stucollection.aggregate([{$unwind:"$exams"},{$unwind:"$exams.scores"},{$group:{"_id":"$name",avg_score:{$avg:"$exams.scores.score"}}},
+	{$sort:{"_id":1}}])
+)
+
+
+
+
+
+
+
+
+
+
+
