@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="chat"></div>
+    <input id="msg" type="text"  placeholder="enter message....">
+    <button onclick="sendMessage()">Send</button>
+    <script>
+        let ws=new WebSocket("ws://10.11.18.211:8000");
+        ws.onmessage=function(event)
+        {
+            let chatbox=document.getElementById("chat");
+            let message=document.createElement("p");
+            message.textContent=event.data;
+            chatbox.appendChild(message);
+        };
+
+        function sendMessage()
+        {
+            let input =document.getElementById("msg");
+            if(input.value.trim()!=="")
+            {
+                ws.send(input.value);
+                input.value="";
+
+            }
+        }
+    </script>
+    
+</body>
+</html>
